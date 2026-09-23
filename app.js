@@ -25,5 +25,17 @@ app.post("/assignments", async (req, res) => {
     }
 });
 
+app.get('/assignments', async(req, res) => {
+    try {
+        const result = await pool.query(
+            `SELECT * FROM assignments ORDER BY id DESC`
+        );
+
+        res.status(200).json(result.rows)
+    }catch (err){
+        console.log(err);
+        res.status(500).json({error: 'Failed to load'})
+    }
+})
 
 app.listen(3000);
